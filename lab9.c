@@ -3,21 +3,22 @@
 // RecordType
 struct RecordType
 {
-	int		id;
-	char	name;
-	int		order; 
+	int id;
+	char name;
+	int order; 
 };
 
 // Fill out this structure
 struct HashType
 {
-
+	struct RecordType* pData;
+	int dataSz;
 };
 
 // Compute the hash function
 int hash(int x)
 {
-
+	return x % 10;
 }
 
 // parses input file to an integer array
@@ -91,4 +92,21 @@ int main(void)
 	recordSz = parseData("input.txt", &pRecords);
 	printRecords(pRecords, recordSz);
 	// Your hash implementation
+	struct HashType hashArray[10];
+	int hashdx;
+	
+	for(int i = 0; i < 10; ++i){
+		hashArray[i].pData = NULL;
+		hashArray[i].dataSz = 0;
+	}
+	for(i = 0; i < recordSz; ++i){
+		hashdx = hash(pRecords[i].id) % hashSz;
+		while(hashArray[hasdx].record.id != 0){
+			hashdx = (hashdx + 1) % hashSz;
+		}
+		hashArray[hashdx].record = pRecords[i];
+	}
+	displayRecordsInHash(hashArray, hashSz);
+	free(pRecords);
+	return 0;
 }
